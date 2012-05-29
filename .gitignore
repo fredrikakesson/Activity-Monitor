@@ -1,6 +1,13 @@
-# Build Folders (you can keep bin if you'd like, to store dlls and pdbs)
-bin
+# Lines starting with '#' are considered comments.
 obj
-
-# mstest test results
+bin
+*.suo
 TestResults
+*.dll
+.svn
+*.exe
+*.msi
+*.lnk
+logs
+_Resharper*
+*.user

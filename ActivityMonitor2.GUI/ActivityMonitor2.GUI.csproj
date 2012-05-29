@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{24D057D7-C71E-4B4F-BFA2-555BD827A1DE}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ActivityMonitor2.GUI</RootNamespace>
+    <AssemblyName>ActivityMonitor2.GUI</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Formular\Veckoformular.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formular\Veckoformular.Designer.cs">
+      <DependentUpon>Veckoformular.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formular\Vyer\IVeckooversiktVy.cs" />
+    <Compile Include="UserControls\Dagdiagram\Dagstapel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\Dagdiagram\Dagstapel.Designer.cs">
+      <DependentUpon>Dagstapel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Dagdiagram\Diagramarea.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\Dagdiagram\Diagramarea.Designer.cs">
+      <DependentUpon>Diagramarea.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Ganttdiagram\GanttBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\Ganttdiagram\GanttBar.Designer.cs">
+      <DependentUpon>GanttBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Ganttdiagram\GanttDiagram.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\Ganttdiagram\GanttDiagram.Designer.cs">
+      <DependentUpon>GanttDiagram.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formular\Ganttformular.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formular\Ganttformular.Designer.cs">
+      <DependentUpon>Ganttformular.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GanttPresentator.cs" />
+    <Compile Include="Formular\Huvudformular.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formular\Huvudformular.Designer.cs">
+      <DependentUpon>Huvudformular.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formular\Vyer\IGanttVy.cs" />
+    <Compile Include="Formular\Vyer\IStartvy.cs" />
+    <Compile Include="Presentator.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Veckopresentator.cs" />
+    <EmbeddedResource Include="Formular\Veckoformular.resx">
+      <DependentUpon>Veckoformular.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\Dagdiagram\Dagstapel.resx">
+      <DependentUpon>Dagstapel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\Dagdiagram\Diagramarea.resx">
+      <DependentUpon>Diagramarea.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\Ganttdiagram\GanttBar.resx">
+      <DependentUpon>GanttBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\Ganttdiagram\GanttDiagram.resx">
+      <DependentUpon>GanttDiagram.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formular\Ganttformular.resx">
+      <DependentUpon>Ganttformular.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formular\Huvudformular.resx">
+      <DependentUpon>Huvudformular.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ActivityMonitor2.Doman\ActivityMonitor2.Doman.csproj">
+      <Project>{ACC93363-E13A-4084-A412-2756770E2FA0}</Project>
+      <Name>ActivityMonitor2.Doman</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
