@@ -16,6 +16,8 @@ namespace ActivityMonitor2.GUI.UserControls.Ganttdiagram
             InitializeComponent();
         }
 
+        public bool VisaVarningDataSaknas { get { return label1.Visible; } set { label1.Visible = value; } }
+
         private int TidTillPixlar(DateTime dateTime)
         {
             return (int)(PixlarPerTimme * dateTime.Hour + (PixlarPerTimme / 60) * dateTime.Minute);

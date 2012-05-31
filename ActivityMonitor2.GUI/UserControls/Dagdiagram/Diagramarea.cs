@@ -13,6 +13,8 @@ namespace ActivityMonitor2.GUI.UserControls.Dagdiagram
             InitializeComponent();
         }
 
+        public bool VisaVarningDataSaknas { get { return label1.Visible; } set { label1.Visible = value; } }
+
         public void VisaData(IList<AktivPeriod> perioder)
         {
             panel1.Controls.Clear();

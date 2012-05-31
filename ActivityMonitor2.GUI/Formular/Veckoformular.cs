@@ -32,12 +32,19 @@ namespace ActivityMonitor2.GUI.Formular
         {
             _perioder = perioder;
             comboBox1.Items.Clear();
-            if (!_perioder.Any()) return;
+            bool dataSaknas = !_perioder.Any();
 
-            comboBox1.Items.AddRange(_perioder.Select(o => o.Användarnamn).Distinct().OrderBy(o => o).ToArray());
-            comboBox1.SelectedIndex = 0;
+            comboBox1.Enabled = !dataSaknas;
+            diagramarea1.VisaVarningDataSaknas = dataSaknas;
 
-            UppdateraDiagram();
+            if (!dataSaknas)
+            {
+
+                comboBox1.Items.AddRange(_perioder.Select(o => o.Användarnamn).Distinct().OrderBy(o => o).ToArray());
+                comboBox1.SelectedIndex = 0;
+
+                UppdateraDiagram();
+            }
         }
 
         private void UppdateraDiagram()

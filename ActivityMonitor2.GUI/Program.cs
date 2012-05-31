@@ -15,8 +15,8 @@ namespace ActivityMonitor2.GUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            const string connectionString =
-                @"Data Source=c:\temp\ActivityMonitor.db;Pooling=true;FailIfMissing=false;Version=3";
+            string connectionString =
+                string.Format("Data Source={0}ActivityMonitor.db;Pooling=true;FailIfMissing=false;Version=3", AppDomain.CurrentDomain.BaseDirectory);
 
             var detektor = new Aktivitetsdetektor(new SystemTimer(10), new Användaraktivitet(120), new Strömspararkontroll()); // 10,120
             var lagring = new SqliteLagring(connectionString);

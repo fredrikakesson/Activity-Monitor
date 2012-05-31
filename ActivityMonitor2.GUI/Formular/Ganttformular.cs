@@ -39,8 +39,17 @@ namespace ActivityMonitor2.GUI.Formular
             _perioder = perioder;
             comboBox1.Items.Clear();
             comboBox1.Items.AddRange(perioder.Select(o => o.Starttid.ToShortDateString()).Distinct().OrderByDescending(o => o).ToArray());
-            comboBox1.SelectedIndex = 0;
-            ganttDiagram1.VisaPerioder(perioder, DateTime.Parse((string)comboBox1.SelectedItem));
+
+            var dataSaknas = (comboBox1.Items.Count == 0);
+            ganttDiagram1.VisaVarningDataSaknas = dataSaknas;
+            comboBox1.Enabled = !dataSaknas;
+
+            if (!dataSaknas)
+            {
+                ganttDiagram1.VisaVarningDataSaknas = false;
+                comboBox1.SelectedIndex = 0;
+                ganttDiagram1.VisaPerioder(perioder, DateTime.Parse((string)comboBox1.SelectedItem));
+            }
         }
 
         #endregion
