@@ -1,5 +1,6 @@
 ﻿using ActivityMonitor2.Doman;
 using ActivityMonitor2.GUI.Formular.Vyer;
+using System.Linq;
 
 namespace ActivityMonitor2.GUI
 {
@@ -16,7 +17,12 @@ namespace ActivityMonitor2.GUI
 
         public void VisaGränssnitt()
         {
-            _ganttVy.VisaData(_lagring.HämtaAllaPerioder());
+            var perioder = _lagring.HämtaAllaPerioder();
+
+            if (perioder.Any())
+                _ganttVy.VisaData(perioder);
+            else
+                _ganttVy.VisaDataSaknas();
             _ganttVy.VisaGränssnitt();
         }
     }

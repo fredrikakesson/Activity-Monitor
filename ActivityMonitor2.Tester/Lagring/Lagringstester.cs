@@ -138,7 +138,7 @@ namespace ActivityMonitor2.Tests.Lagring
             _lista = Lagring.HämtaAllaFörEnVissDag(new DateTime(2001, 1, 1));
         }
 
-        [TestMethod]
+        [TestMethod, Timeout(1500)]
         public void SåFårViRättAntalTräffar()
         {
             Assert.AreEqual(2, _lista.Count);

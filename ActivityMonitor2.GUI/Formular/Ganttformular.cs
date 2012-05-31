@@ -40,18 +40,22 @@ namespace ActivityMonitor2.GUI.Formular
             comboBox1.Items.Clear();
             comboBox1.Items.AddRange(perioder.Select(o => o.Starttid.ToShortDateString()).Distinct().OrderByDescending(o => o).ToArray());
 
-            var dataSaknas = (comboBox1.Items.Count == 0);
-            ganttDiagram1.VisaVarningDataSaknas = dataSaknas;
-            comboBox1.Enabled = !dataSaknas;
+            comboBox1.Enabled = true;
 
-            if (!dataSaknas)
-            {
-                ganttDiagram1.VisaVarningDataSaknas = false;
-                comboBox1.SelectedIndex = 0;
-                ganttDiagram1.VisaPerioder(perioder, DateTime.Parse((string)comboBox1.SelectedItem));
-            }
+            ganttDiagram1.VisaVarningDataSaknas = false;
+            comboBox1.SelectedIndex = 0;
+            ganttDiagram1.VisaPerioder(perioder, DateTime.Parse((string)comboBox1.SelectedItem));
+        }
+
+        public void VisaDataSaknas()
+        {
+            ganttDiagram1.VisaVarningDataSaknas = true;
+            comboBox1.Enabled = false;
         }
 
         #endregion
+
+
+
     }
 }

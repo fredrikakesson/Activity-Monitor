@@ -32,24 +32,25 @@ namespace ActivityMonitor2.GUI.Formular
         {
             _perioder = perioder;
             comboBox1.Items.Clear();
-            bool dataSaknas = !_perioder.Any();
 
-            comboBox1.Enabled = !dataSaknas;
-            diagramarea1.VisaVarningDataSaknas = dataSaknas;
+            comboBox1.Items.AddRange(_perioder.Select(o => o.Användarnamn).Distinct().OrderBy(o => o).ToArray());
+            comboBox1.SelectedIndex = 0;
+            comboBox1.Enabled = true;
 
-            if (!dataSaknas)
-            {
-
-                comboBox1.Items.AddRange(_perioder.Select(o => o.Användarnamn).Distinct().OrderBy(o => o).ToArray());
-                comboBox1.SelectedIndex = 0;
-
-                UppdateraDiagram();
-            }
+            UppdateraDiagram();
         }
 
         private void UppdateraDiagram()
         {
+            diagramarea1.VisaVarningDataSaknas = false;
             diagramarea1.VisaData(_perioder.Where(o => o.Användarnamn.Equals(comboBox1.Text)).ToList());
+        }
+
+
+        public void VisaDataSaknas()
+        {
+            comboBox1.Enabled = false;
+            diagramarea1.VisaVarningDataSaknas = true;
         }
     }
 }

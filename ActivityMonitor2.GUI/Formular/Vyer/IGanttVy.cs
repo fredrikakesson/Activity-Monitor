@@ -7,5 +7,7 @@ namespace ActivityMonitor2.GUI.Formular.Vyer
     {
         void VisaGränssnitt();
         void VisaData(IList<AktivPeriod> perioder);
+
+        void VisaDataSaknas();
     }
 }

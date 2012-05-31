@@ -7,7 +7,7 @@ using ActivityMonitor2.GUI.Formular.Vyer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 
-namespace ActivityMonitor2.Tests.Presentation
+namespace ActivityMonitor2.Tests.Presentation.Ganttpresentatörstester
 {
     public class GivetEnGanttPresentatör
     {
@@ -19,9 +19,18 @@ namespace ActivityMonitor2.Tests.Presentation
         {
             Vy = Substitute.For<IGanttVy>();
             Lagring = Substitute.For<ILagring>();
-            Lagring.HämtaAllaFörEnVissDag(Arg.Any<DateTime>()).Returns(FejkadPeriodlista());
 
             Presentatör = new GanttPresentatör(Vy, Lagring);
+        }
+
+
+    }
+
+    public class GivetAttDetFinnsData : GivetEnGanttPresentatör
+    {
+        public GivetAttDetFinnsData()
+        {
+            Lagring.HämtaAllaPerioder().Returns(FejkadPeriodlista());
         }
 
         private static IList<AktivPeriod> FejkadPeriodlista()
@@ -51,7 +60,7 @@ namespace ActivityMonitor2.Tests.Presentation
     }
 
     [TestClass]
-    public class NärViVillVisaGränssnittet : GivetEnGanttPresentatör
+    public class NärViVillVisaGränssnittet : GivetAttDetFinnsData
     {
         public NärViVillVisaGränssnittet()
         {
@@ -68,6 +77,27 @@ namespace ActivityMonitor2.Tests.Presentation
         public void SåFårGränssnittetRättData()
         {
             Vy.Received(1).VisaData(Arg.Any<IList<AktivPeriod>>());
+        }
+    }
+
+    [TestClass]
+    public class NärViVisarGränssnittetOchDetInteFinnsData : GivetEnGanttPresentatör
+    {
+        public NärViVisarGränssnittetOchDetInteFinnsData()
+        {
+            Presentatör.VisaGränssnitt();
+        }
+
+        [TestMethod]
+        public void SåVisasGränssnittet()
+        {
+            Vy.Received(1).VisaGränssnitt();
+        }
+
+        [TestMethod]
+        public void SåFårVisasEnVarning()
+        {
+            Vy.Received(1).VisaDataSaknas();
         }
     }
 }
