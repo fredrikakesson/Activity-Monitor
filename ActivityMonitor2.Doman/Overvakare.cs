@@ -33,8 +33,9 @@ namespace ActivityMonitor2.Doman
 
         public void Dispose()
         {
-            if (_period.Tidsmängd.TotalSeconds.Equals(0))
-                AvslutaPågåendeAktivitet();
+            if (_period != null)
+                if (_period.Tidsmängd.TotalSeconds.Equals(0))
+                    AvslutaPågåendeAktivitet();
         }
     }
 }

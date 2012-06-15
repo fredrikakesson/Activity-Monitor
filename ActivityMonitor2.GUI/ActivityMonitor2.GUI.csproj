@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Formular\Huvudgranssnitt.cs" />
     <Compile Include="Formular\Veckoformular.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -92,12 +93,6 @@
       <DependentUpon>Ganttformular.cs</DependentUpon>
     </Compile>
     <Compile Include="GanttPresentator.cs" />
-    <Compile Include="Formular\Huvudformular.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Formular\Huvudformular.Designer.cs">
-      <DependentUpon>Huvudformular.cs</DependentUpon>
-    </Compile>
     <Compile Include="Formular\Vyer\IGanttVy.cs" />
     <Compile Include="Formular\Vyer\IStartvy.cs" />
     <Compile Include="Presentator.cs" />
@@ -121,9 +116,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formular\Ganttformular.resx">
       <DependentUpon>Ganttformular.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Formular\Huvudformular.resx">
-      <DependentUpon>Huvudformular.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

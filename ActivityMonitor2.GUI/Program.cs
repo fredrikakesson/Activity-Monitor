@@ -26,12 +26,13 @@ namespace ActivityMonitor2.GUI
 
                 Vyer.Veckoöversikt = new Veckopresentatör(new Veckoformulär(), lagring);
                 Vyer.Gantt = new GanttPresentatör(new Ganttformulär(), lagring);
-                Vyer.Huvud = new Presentatör(new Huvudformulär(ikongenerator), detektor, lagring, new SystemTimer(10));
+                Vyer.Huvud = new Presentatör(new Huvudgränssnitt(ikongenerator), detektor, lagring, new SystemTimer(10));
                     // 10
                 Vyer.Huvud.VisaGanttschema += (s, e) => Vyer.Gantt.VisaGränssnitt();
                 Vyer.Huvud.VisaVeckoöversikt += (s, e) => Vyer.Veckoöversikt.VisaGränssnitt();
 
-                Vyer.Huvud.VisaGränssnitt();
+                //Vyer.Huvud.VisaGränssnitt();
+                Application.Run();
             }
         }
     }

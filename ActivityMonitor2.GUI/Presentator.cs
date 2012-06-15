@@ -19,8 +19,8 @@ namespace ActivityMonitor2.GUI
             _startvy = vy;
             _lagring = lagring;
 
-            detektor.AktivitetUpptäckt += (s, e) => VisaAktivitet();
-            detektor.InaktivitetUpptäckt += (s, e) => VisaInaktivitet();
+            detektor.AktivitetUpptäckt += (s, e) => NoteraAktivitet();
+            detektor.InaktivitetUpptäckt += (s, e) => NoteraInaktivitet();
             vy.VisaDagsöversikt += (s, e) => VisaGanttschema(this, new EventArgs());
             vy.VisaVeckoöversikt += (s, e) => VisaVeckoöversikt(this, new EventArgs());
             aktivDelTimer.Tick += (s, e) => VisaAktivDel();
@@ -28,9 +28,8 @@ namespace ActivityMonitor2.GUI
             VisaAktivDel();
         }
 
-        private void VisaAktivitet()
+        private void NoteraAktivitet()
         {
-            _startvy.VisaSomAktiv();
             _ärAktiv = true;
             _aktivStarttid = SystemTime.Now();
         }
@@ -40,9 +39,8 @@ namespace ActivityMonitor2.GUI
             _startvy.VisaAktivDel(BeräknaAktivDel(), _ärAktiv);
         }
 
-        private void VisaInaktivitet()
+        private void NoteraInaktivitet()
         {
-            _startvy.VisaSomInaktiv();
             _ärAktiv = false;
         }
 
@@ -69,7 +67,7 @@ namespace ActivityMonitor2.GUI
 
         internal void VisaGränssnitt()
         {
-            _startvy.VisaGränssnittFörAnvändaren();
+            throw new NotImplementedException();
         }
 
         public event EventHandler VisaGanttschema;
