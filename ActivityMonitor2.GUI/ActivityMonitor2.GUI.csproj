@@ -99,6 +99,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Veckopresentator.cs" />
+    <Compile Include="Vyer.cs" />
     <EmbeddedResource Include="Formular\Veckoformular.resx">
       <DependentUpon>Veckoformular.cs</DependentUpon>
     </EmbeddedResource>

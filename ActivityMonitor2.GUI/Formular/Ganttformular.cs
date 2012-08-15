@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using ActivityMonitor2.Doman;
 using ActivityMonitor2.Doman.Entiteter;
 using ActivityMonitor2.GUI.Formular.Vyer;
 using System.Linq;
@@ -38,7 +37,8 @@ namespace ActivityMonitor2.GUI.Formular
         {
             _perioder = perioder;
             comboBox1.Items.Clear();
-            comboBox1.Items.AddRange(perioder.Select(o => o.Starttid.ToShortDateString()).Distinct().OrderByDescending(o => o).ToArray());
+            if (perioder != null)
+                comboBox1.Items.AddRange(perioder.Select(o => o.Starttid.ToShortDateString()).Distinct().OrderByDescending(o => o).ToArray());
 
             comboBox1.Enabled = true;
 

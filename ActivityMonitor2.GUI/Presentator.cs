@@ -36,7 +36,10 @@ namespace ActivityMonitor2.GUI
 
         private void VisaAktivDel()
         {
-            _startvy.VisaAktivDel(BeräknaAktivDel(), _ärAktiv);
+            // Testar att stänga av visningen vid inaktivitet för att 
+            // lösa problem med samtidighet i databasen.
+            if (_ärAktiv)
+                _startvy.VisaAktivDel(BeräknaAktivDel(), _ärAktiv);
         }
 
         private void NoteraInaktivitet()
@@ -49,10 +52,9 @@ namespace ActivityMonitor2.GUI
             IList<AktivPeriod> perioder = _lagring.HämtaAllaFörEnVissDag(SystemTime.Now());
             AktivPeriod förstaPerioden = perioder.OrderBy(o => o.Starttid).FirstOrDefault();
 
-            double minuterFrånStartTillNu;
-            minuterFrånStartTillNu = förstaPerioden == null ? 
-                SystemTime.Now().Subtract(_aktivStarttid).TotalMinutes : 
-                SystemTime.Now().Subtract(förstaPerioden.Starttid).TotalMinutes;
+            var minuterFrånStartTillNu = förstaPerioden == null
+                ? SystemTime.Now().Subtract(_aktivStarttid).TotalMinutes 
+                : SystemTime.Now().Subtract(förstaPerioden.Starttid).TotalMinutes;
 
             double aktivaMinuter = perioder.Sum(o => o.Tidsmängd.TotalMinutes);
 

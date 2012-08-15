@@ -33,10 +33,9 @@ namespace BitmapToIcon
             {
                 FileHeader.Populate(br);
                 Info.Populate(br);
-                if (Info.InfoHeader.BiSizeImage > 0)
-                    ImageData = br.ReadBytes((int) Info.InfoHeader.BiSizeImage);
-                else
-                    ImageData = br.ReadBytes((int) (br.BaseStream.Length - br.BaseStream.Position));
+                ImageData = Info.InfoHeader.BiSizeImage > 0 
+                    ? br.ReadBytes((int) Info.InfoHeader.BiSizeImage) 
+                    : br.ReadBytes((int) (br.BaseStream.Length - br.BaseStream.Position));
             }
         }
 

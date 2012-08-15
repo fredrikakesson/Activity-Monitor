@@ -15,13 +15,13 @@ namespace ActivityMonitor2.GUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            string connectionString =
+            var connectionString =
                 string.Format("Data Source={0}ActivityMonitor.db;Pooling=true;FailIfMissing=false;Version=3", AppDomain.CurrentDomain.BaseDirectory);
 
             var detektor = new Aktivitetsdetektor(new SystemTimer(10), new Användaraktivitet(120), new Strömspararkontroll()); // 10,120
             var lagring = new SqliteLagring(connectionString);
             var ikongenerator = new Ikongenerator();
-            using (var o = new Övervakare(detektor, lagring))
+            using ( new Övervakare(detektor, lagring))
             {
 
                 Vyer.Veckoöversikt = new Veckopresentatör(new Veckoformulär(), lagring);
@@ -35,12 +35,5 @@ namespace ActivityMonitor2.GUI
                 Application.Run();
             }
         }
-    }
-
-    internal class Vyer
-    {
-        public static Presentatör Huvud;
-        public static GanttPresentatör Gantt;
-        public static Veckopresentatör Veckoöversikt;
     }
 }

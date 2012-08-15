@@ -260,8 +260,6 @@ namespace BitmapToIcon
                 // number of colors is specified
                 return InfoHeader.BiClrUsed;
             }
-            else
-            {
                 // number of colors is based on the bitcount
                 switch (InfoHeader.BiBitCount)
                 {
@@ -274,7 +272,6 @@ namespace BitmapToIcon
                     default:
                         return 0;
                 }
-            }
         }
     }
 
@@ -353,18 +350,18 @@ namespace BitmapToIcon
 
         public RGBQUAD(Byte blue, Byte green, Byte red)
         {
-            this.Blue = blue;
-            this.Green = green;
-            this.Red = red;
+            Blue = blue;
+            Green = green;
+            Red = red;
             Alpha = 0;
         }
 
         public RGBQUAD(Byte blue, Byte green, Byte red, Byte alpha)
         {
-            this.Blue = blue;
-            this.Green = green;
-            this.Red = red;
-            this.Alpha = alpha;
+            Blue = blue;
+            Green = green;
+            Red = red;
+            Alpha = alpha;
         }
 
         public void Save(BinaryWriter bw)

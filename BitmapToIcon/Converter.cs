@@ -45,7 +45,6 @@ namespace BitmapToIcon
         public static IconHolder BitmapToIconHolder(BitmapHolder bmp)
         {
             var mapColors = (bmp.Info.InfoHeader.BiBitCount <= 24);
-            var maximumColors = 1 << bmp.Info.InfoHeader.BiBitCount;
             //Hashtable uniqueColors = new Hashtable(maximumColors);
             // actual colors is probably nowhere near maximum, so dont try to initialize the hashtable
             var uniqueColors = new Hashtable();
@@ -156,8 +155,7 @@ namespace BitmapToIcon
             // copy image data
             var bytePosXOR = 0;
             var bytePosAND = 0;
-            byte transparentIndex = 0;
-            transparentIndex = indexedImage[0];
+            byte transparentIndex = indexedImage[0];
             //initialize AND
             ico.IconImages[0].AND[0] = byte.MaxValue;
 
