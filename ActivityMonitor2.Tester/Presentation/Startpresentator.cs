@@ -61,9 +61,10 @@ namespace ActivityMonitor2.Tests.Presentation
     public class NärPresentatörenStartar : GivetEnPresentatör
     {
         [TestMethod]
-        public void SåVisasAktivDel()
+        public void SåVisasInteAktivDel()
         {
-            Vy.Received(1).VisaAktivDel(Arg.Any<double>(), false);
+            // Aktiv del ska inte visas förrän aktivitet upptäcks
+            Vy.Received(0).VisaAktivDel(Arg.Any<double>(), false);
         }
     }
 
@@ -76,6 +77,7 @@ namespace ActivityMonitor2.Tests.Presentation
         {
             Detektor.AktivitetUpptäckt += Raise.Event();
         }
+
 
         [TestMethod]
         public void SåVisasDetFörAnvändaren()
@@ -107,13 +109,14 @@ namespace ActivityMonitor2.Tests.Presentation
         public NärAktivDelTimernTickar()
         {
             SystemTime.Now = () => new DateTime(2001, 1, 1, 4, 0, 0);
+            Detektor.AktivitetUpptäckt += Raise.Event();
             Timer.Tick += Raise.Event();
         }
 
         [TestMethod]
         public void SåVisasRättAndelAktiv()
         {
-            Vy.Received(1).VisaAktivDel(0.5, false);
+            Vy.Received(1).VisaAktivDel(0.5, true);
         }
     }
 
