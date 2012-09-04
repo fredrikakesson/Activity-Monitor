@@ -10,11 +10,11 @@ namespace ActivityMonitor2.Doman
     public class SqliteLagring : ILagring
     {
         private const string Tabellnamn = "AktivaPerioder";
-        private readonly SQLiteConnection _conn;
+        private readonly string _connStr;
 
         public SqliteLagring(string connectionString)
         {
-            _conn = new SQLiteConnection(connectionString);
+            _connStr = connectionString;
             if (!TabellenFinns)
                 SkapaTabellen();
         }
@@ -23,13 +23,10 @@ namespace ActivityMonitor2.Doman
         {
             get
             {
-                SQLiteCommand cmd = _conn.CreateCommand();
-                cmd.CommandText = string.Format("SELECT name FROM sqlite_master WHERE name='{0}'", Tabellnamn);
-                if (_conn.State!=ConnectionState.Open)
-                    _conn.Open();
-                bool tabellenFinns = cmd.ExecuteReader().HasRows;
-                _conn.Close();
-                return tabellenFinns;
+                return ExecQuery(cmd =>
+                                     {
+                                         cmd.CommandText = string.Format("SELECT name FROM sqlite_master WHERE name='{0}'", Tabellnamn);
+                                     }, reader => reader.HasRows);
             }
         }
 
@@ -37,18 +34,15 @@ namespace ActivityMonitor2.Doman
 
         public void Spara(AktivPeriod period)
         {
-            SQLiteCommand cmd = _conn.CreateCommand();
-            cmd.CommandText = string.Format("INSERT INTO {0} VALUES (null, @start, @mangd, @namn);",
-                                            Tabellnamn);
+            ExecNonQuery(cmd =>
+                             {
+                                 cmd.CommandText = string.Format("INSERT INTO {0} VALUES (null, @start, @mangd, @namn);",
+                                                                 Tabellnamn);
 
-            cmd.Parameters.Add(new SQLiteParameter("@start", period.Starttid));
-            cmd.Parameters.Add(new SQLiteParameter("@mangd", period.Tidsmängd));
-            cmd.Parameters.Add(new SQLiteParameter("@namn", period.Användarnamn));
-
-            if (_conn.State != ConnectionState.Open)
-                _conn.Open();
-            cmd.ExecuteNonQuery();
-            _conn.Close();
+                                 cmd.Parameters.Add(new SQLiteParameter("@start", period.Starttid));
+                                 cmd.Parameters.Add(new SQLiteParameter("@mangd", period.Tidsmängd));
+                                 cmd.Parameters.Add(new SQLiteParameter("@namn", period.Användarnamn));
+                             });
         }
 
         public IList<AktivPeriod> HämtaAllaFörEnVissDag(DateTime dag)
@@ -65,44 +59,67 @@ namespace ActivityMonitor2.Doman
 
         public IList<AktivPeriod> HämtaAllaPerioder()
         {
-            var perioder = new List<AktivPeriod>();
 
-            SQLiteCommand cmd = _conn.CreateCommand();
-            cmd.CommandText = string.Format("SELECT start, mangd, anvandarnamn FROM {0} ORDER BY start", Tabellnamn);
-
-            if (_conn.State != ConnectionState.Open)
-                _conn.Open();
-            SQLiteDataReader result = cmd.ExecuteReader(CommandBehavior.CloseConnection);
-
-            while (result.Read())
-            {
-                perioder.Add(
-                    new AktivPeriod
-                        {
-                            Starttid = DateTime.Parse(result["start"].ToString()),
-                            Tidsmängd = TimeSpan.Parse(result["mangd"].ToString()),
-                            Användarnamn = result["anvandarnamn"].ToString()
-                        }
-                    );
-            }
-            result.Close();
-
-            return perioder;
+            return ExecQuery(cmd =>
+                                 {
+                                     cmd.CommandText = string.Format("SELECT start, mangd, anvandarnamn FROM {0} ORDER BY start", Tabellnamn);
+                                 },
+                                 result =>
+                                 {
+                                     var perioder = new List<AktivPeriod>();
+                                     while (result.Read())
+                                     {
+                                         perioder.Add(
+                                             new AktivPeriod
+                                             {
+                                                 Starttid = DateTime.Parse(result["start"].ToString()),
+                                                 Tidsmängd = TimeSpan.Parse(result["mangd"].ToString()),
+                                                 Användarnamn = result["anvandarnamn"].ToString()
+                                             }
+                                             );
+                                     }
+                                     return perioder;
+                                 });
         }
 
         #endregion
 
         private void SkapaTabellen()
         {
-            SQLiteCommand cmd = _conn.CreateCommand();
-            cmd.CommandText = string.Format(
-                "CREATE TABLE {0} (id INTEGER PRIMARY KEY ASC, start, mangd, anvandarnamn);", Tabellnamn);
-
-            if (_conn.State != ConnectionState.Open)
-                _conn.Open();
-            cmd.ExecuteNonQuery();
-            _conn.Close();
+            ExecNonQuery(cmd =>
+                             {
+                                 cmd.CommandText = string.Format(
+                                     "CREATE TABLE {0} (id INTEGER PRIMARY KEY ASC, start, mangd, anvandarnamn);", Tabellnamn);
+                             });
         }
 
+        private void ExecNonQuery(Action<SQLiteCommand> configureCommand)
+        {
+            using (var conn = new SQLiteConnection(_connStr))
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    configureCommand(cmd);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        private T ExecQuery<T>(Action<SQLiteCommand> configureCommand, Func<SQLiteDataReader, T> getter)
+        {
+            using (var conn = new SQLiteConnection(_connStr))
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    configureCommand(cmd);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        return getter(reader);
+                    }
+                }
+            }
+        }
     }
 }
