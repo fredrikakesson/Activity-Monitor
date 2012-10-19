@@ -6,6 +6,7 @@ namespace ActivityMonitor2.GUI.Formular.Vyer
     {
         void VisaGränssnittFörAnvändaren();
         event EventHandler VisaDagsöversikt;
+        event EventHandler VisaSpektrum;
         event EventHandler VisaVeckoöversikt;
         void VisaAktivDel(double procent, bool användarenAktiv);
     }

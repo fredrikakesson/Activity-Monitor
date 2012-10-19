@@ -21,6 +21,7 @@ namespace ActivityMonitor2.GUI
 
             detektor.AktivitetUpptäckt += (s, e) => NoteraAktivitet();
             detektor.InaktivitetUpptäckt += (s, e) => NoteraInaktivitet();
+            vy.VisaSpektrum += (s, e) => VisaSpektrum(this, new EventArgs());
             vy.VisaDagsöversikt += (s, e) => VisaGanttschema(this, new EventArgs());
             vy.VisaVeckoöversikt += (s, e) => VisaVeckoöversikt(this, new EventArgs());
             aktivDelTimer.Tick += (s, e) => VisaAktivDel();
@@ -69,10 +70,11 @@ namespace ActivityMonitor2.GUI
 
         internal void VisaGränssnitt()
         {
-            throw new NotImplementedException();
+            _startvy.VisaGränssnittFörAnvändaren();
         }
 
         public event EventHandler VisaGanttschema;
         public event EventHandler VisaVeckoöversikt;
+        public event EventHandler VisaSpektrum;
     }
 }

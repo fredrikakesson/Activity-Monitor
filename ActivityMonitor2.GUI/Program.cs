@@ -21,19 +21,28 @@ namespace ActivityMonitor2.GUI
             var detektor = new Aktivitetsdetektor(new SystemTimer(10), new Användaraktivitet(120), new Strömspararkontroll()); // 10,120
             var lagring = new SqliteLagring(connectionString);
             var ikongenerator = new Ikongenerator();
-            using ( new Övervakare(detektor, lagring))
+            using (new Övervakare(detektor, lagring))
             {
 
                 Vyer.Veckoöversikt = new Veckopresentatör(new Veckoformulär(), lagring);
                 Vyer.Gantt = new GanttPresentatör(new Ganttformulär(), lagring);
-                Vyer.Huvud = new Presentatör(new Huvudgränssnitt(ikongenerator), detektor, lagring, new SystemTimer(10));
-                    // 10
+                Vyer.Spektrum = new Spektrumpresentatör(new Spektrumformulär(), lagring);
+                Vyer.Huvud = new Presentatör(new Huvudgränssnitt(ikongenerator, new Applikationskommandon()), detektor, lagring, new SystemTimer(10));
+                // 10
                 Vyer.Huvud.VisaGanttschema += (s, e) => Vyer.Gantt.VisaGränssnitt();
                 Vyer.Huvud.VisaVeckoöversikt += (s, e) => Vyer.Veckoöversikt.VisaGränssnitt();
+                Vyer.Huvud.VisaSpektrum += (s, e) => Vyer.Spektrum.VisaGränssnitt();
 
-                //Vyer.Huvud.VisaGränssnitt();
                 Application.Run();
             }
+        }
+    }
+
+    public class Applikationskommandon : IApplikationskommandon
+    {
+        public void StängNerApplikationen()
+        {
+            Application.Exit();
         }
     }
 }

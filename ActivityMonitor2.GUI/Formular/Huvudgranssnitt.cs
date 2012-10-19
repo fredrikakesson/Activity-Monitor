@@ -9,26 +9,32 @@ namespace ActivityMonitor2.GUI.Formular
     {
         public event EventHandler VisaDagsöversikt;
         public event EventHandler VisaVeckoöversikt;
+        public event EventHandler VisaSpektrum;
         private IIkongenerator _ikongenerator;
+        private IApplikationskommandon _appkommandon;
+        private NotifyIcon notifyIcon1;
+        private ContextMenuStrip contextMenuStrip1;
+        private ToolStripMenuItem VisaGanttMeny;
+        private ToolStripMenuItem AvslutaApplikationMeny;
+        private ToolStripMenuItem VisaVeckoöversiktMeny;
+        private ToolStripMenuItem VisaSpektrumMeny;
+        private ToolStripSeparator toolStripMenuItem1;
 
-        public Huvudgränssnitt(IIkongenerator generator)
+        public Huvudgränssnitt(IIkongenerator generator, IApplikationskommandon appkommandon)
         {
             InitializeComponent();
             notifyIcon1.MouseClick +=
                 (s, e) => { if (e.Button == MouseButtons.Left) VisaVeckoöversikt(this, new EventArgs()); };
             VisaGanttMeny.Click += (s, e) => VisaDagsöversikt(this, new EventArgs());
+            VisaSpektrumMeny.Click += (s, e) => VisaSpektrum(this, new EventArgs());
             VisaVeckoöversiktMeny.Click += (s, e) => VisaVeckoöversikt(this, new EventArgs());
             AvslutaApplikationMeny.Click += (s, e) =>
                                                 {
                                                     notifyIcon1.Dispose();
-                                                    Close();
+                                                    _appkommandon.StängNerApplikationen();
                                                 };
             _ikongenerator = generator;
-        }
-
-        private void Close()
-        {
-            Application.Exit();
+            _appkommandon = appkommandon;
         }
 
         public void VisaAktivDel(double procent, bool användarenÄrAktiv)
@@ -41,61 +47,32 @@ namespace ActivityMonitor2.GUI.Formular
         {
             var container = new ControlContainer();
 
-            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(container);
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(container);
-            this.VisaGanttMeny = new System.Windows.Forms.ToolStripMenuItem();
-            this.AvslutaApplikationMeny = new System.Windows.Forms.ToolStripMenuItem();
-            this.VisaVeckoöversiktMeny = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            notifyIcon1 = new NotifyIcon(container);
+            contextMenuStrip1 = new ContextMenuStrip(container);
+            VisaGanttMeny = new ToolStripMenuItem("Ganttschema");
+            VisaSpektrumMeny = new ToolStripMenuItem("Spektrumdiagram");
+            AvslutaApplikationMeny = new ToolStripMenuItem("Avsluta");
+            VisaVeckoöversiktMeny = new ToolStripMenuItem("Veckoöversikt");
+            toolStripMenuItem1 = new ToolStripSeparator();
 
-            this.notifyIcon1.ContextMenuStrip = this.contextMenuStrip1;
-            this.notifyIcon1.Visible = true;
+            notifyIcon1.ContextMenuStrip = this.contextMenuStrip1;
+            notifyIcon1.Visible = true;
 
-            // contextMenuStrip1
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.VisaGanttMeny,
-            this.VisaVeckoöversiktMeny,
-            this.toolStripMenuItem1,
-            this.AvslutaApplikationMeny});
-            this.contextMenuStrip1.Size = new System.Drawing.Size(148, 76);
-            // 
-            // VisaGanttMeny
-            // 
-            this.VisaGanttMeny.Name = "VisaGanttMeny";
-            this.VisaGanttMeny.Size = new System.Drawing.Size(147, 22);
-            this.VisaGanttMeny.Text = "Ganttschema";
-            // 
-            // AvslutaApplikationMeny
-            // 
-            this.AvslutaApplikationMeny.Name = "AvslutaApplikationMeny";
-            this.AvslutaApplikationMeny.Size = new System.Drawing.Size(147, 22);
-            this.AvslutaApplikationMeny.Text = "Avsluta";
-            // 
-            // VisaVeckoöversiktMeny
-            // 
-            this.VisaVeckoöversiktMeny.Name = "VisaVeckoöversiktMeny";
-            this.VisaVeckoöversiktMeny.Size = new System.Drawing.Size(147, 22);
-            this.VisaVeckoöversiktMeny.Text = "Veckoöversikt";
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(144, 6);
-            this.contextMenuStrip1.ResumeLayout(false);
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] {
+                VisaGanttMeny,
+                VisaVeckoöversiktMeny,
+                VisaSpektrumMeny,
+                toolStripMenuItem1,
+                AvslutaApplikationMeny});
+
+            contextMenuStrip1.ResumeLayout(false);
         }
-
-        private System.Windows.Forms.NotifyIcon notifyIcon1;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem VisaGanttMeny;
-        private System.Windows.Forms.ToolStripMenuItem AvslutaApplikationMeny;
-        private System.Windows.Forms.ToolStripMenuItem VisaVeckoöversiktMeny;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
 
         class ControlContainer : System.ComponentModel.IContainer
         {
             public void Add(System.ComponentModel.IComponent component, string name) { }
             public void Add(System.ComponentModel.IComponent component) { }
-            public System.ComponentModel.ComponentCollection Components { get { throw new NotImplementedException();  } }
+            public System.ComponentModel.ComponentCollection Components { get { throw new NotImplementedException(); } }
             public void Remove(System.ComponentModel.IComponent component) { }
             public void Dispose() { }
         }

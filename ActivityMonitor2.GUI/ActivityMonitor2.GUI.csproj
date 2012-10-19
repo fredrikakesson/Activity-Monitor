@@ -25,13 +25,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
+    <DefineConstants>
+    </DefineConstants>
+    <ErrorReport>none</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <PlatformTarget>x86</PlatformTarget>
@@ -40,6 +42,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <OutputPath>bin\Release\</OutputPath>
+    <ErrorReport>none</ErrorReport>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <Optimize>true</Optimize>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -54,6 +59,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Formular\Spektrumformular.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formular\Spektrumformular.Designer.cs">
+      <DependentUpon>Spektrumformular.cs</DependentUpon>
+    </Compile>
     <Compile Include="Formular\Huvudgranssnitt.cs" />
     <Compile Include="Formular\Veckoformular.cs">
       <SubType>Form</SubType>
@@ -61,7 +72,10 @@
     <Compile Include="Formular\Veckoformular.Designer.cs">
       <DependentUpon>Veckoformular.cs</DependentUpon>
     </Compile>
+    <Compile Include="Formular\Vyer\ISpektrumVy.cs" />
     <Compile Include="Formular\Vyer\IVeckooversiktVy.cs" />
+    <Compile Include="IApplikationskommandon.cs" />
+    <Compile Include="Spektrumpresentatör.cs" />
     <Compile Include="UserControls\Dagdiagram\Dagstapel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -98,8 +112,29 @@
     <Compile Include="Presentator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserControls\Spektrumdiagram\Aktivitetsmarkering.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\Spektrumdiagram\Aktivitetsmarkering.Designer.cs">
+      <DependentUpon>Aktivitetsmarkering.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Spektrumdiagram\Spektrumdiagram.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\Spektrumdiagram\Spektrumdiagram.Designer.cs">
+      <DependentUpon>Spektrumdiagram.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Spektrumdiagram\TimMarkering.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\Spektrumdiagram\TimMarkering.Designer.cs">
+      <DependentUpon>TimMarkering.cs</DependentUpon>
+    </Compile>
     <Compile Include="Veckopresentator.cs" />
     <Compile Include="Vyer.cs" />
+    <EmbeddedResource Include="Formular\Spektrumformular.resx">
+      <DependentUpon>Spektrumformular.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Formular\Veckoformular.resx">
       <DependentUpon>Veckoformular.cs</DependentUpon>
     </EmbeddedResource>
@@ -127,6 +162,15 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UserControls\Spektrumdiagram\Aktivitetsmarkering.resx">
+      <DependentUpon>Aktivitetsmarkering.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\Spektrumdiagram\Spektrumdiagram.resx">
+      <DependentUpon>Spektrumdiagram.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\Spektrumdiagram\TimMarkering.resx">
+      <DependentUpon>TimMarkering.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -5,5 +5,6 @@ namespace ActivityMonitor2.GUI
         public static Presentatör Huvud;
         public static GanttPresentatör Gantt;
         public static Veckopresentatör Veckoöversikt;
+        public static Spektrumpresentatör Spektrum;
     }
 }

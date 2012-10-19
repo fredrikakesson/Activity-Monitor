@@ -10,7 +10,7 @@ namespace ActivityMonitor2.Doman
         /// <param name="sekunder">Sekunder mellan tick</param>
         public SystemTimer(int sekunder)
         {
-            _timer.Interval = sekunder*1000;
+            _timer.Interval = sekunder * 1000;
             _timer.Elapsed += (s, e) => Tick(this, new EventArgs());
             _timer.Enabled = true;
         }
