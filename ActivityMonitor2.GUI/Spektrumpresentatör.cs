@@ -20,9 +20,9 @@ namespace ActivityMonitor2.GUI
 
         public void VisaGränssnitt()
         {
-            var perioder = _lagring.HämtaSenasteVeckansData();
+            var perioder = _lagring.HämtaSenasteMånadensData();
             if (perioder.Any())
-                _vy.VisaData(_lagring.HämtaSenasteVeckansData());
+                _vy.VisaData(perioder);
             else
                 _vy.VisaDataSaknas();
             _vy.VisaGränssnitt(); 

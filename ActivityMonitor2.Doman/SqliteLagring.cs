@@ -121,5 +121,13 @@ namespace ActivityMonitor2.Doman
                 }
             }
         }
+
+
+        public IList<AktivPeriod> HämtaSenasteMånadensData()
+        {
+            var perioder = HämtaAllaPerioder();
+            return perioder.Where(o => o.Starttid.Date >= (SystemTime.Now().AddMonths(-1))).ToList();
+        }
+
     }
 }

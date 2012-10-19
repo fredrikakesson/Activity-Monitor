@@ -10,5 +10,6 @@ namespace ActivityMonitor2.Doman
         IList<AktivPeriod> HämtaAllaFörEnVissDag(DateTime dag);
         IList<AktivPeriod> HämtaSenasteVeckansData();
         IList<AktivPeriod> HämtaAllaPerioder();
+        IList<AktivPeriod> HämtaSenasteMånadensData();
     }
 }

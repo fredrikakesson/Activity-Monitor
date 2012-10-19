@@ -51,7 +51,7 @@ namespace ActivityMonitor2.GUI.Formular
             this.ClientSize = new System.Drawing.Size(532, 371);
             this.Controls.Add(this.spektrumdiagram1);
             this.Name = "Spektrumformulär";
-            this.Text = "Spektrum över senaste veckan";
+            this.Text = "Spektrum över senaste månaden";
             this.ResumeLayout(false);
 
         }
